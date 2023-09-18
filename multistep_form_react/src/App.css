@@ -52,6 +52,7 @@ textarea {
 
 textarea {
     height: 120px;
+    resize: none;
 }
 
 /*Actions*/
