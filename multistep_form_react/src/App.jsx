@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-key */
 import './App.css'
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { FiSend } from 'react-icons/fi';
 
 //components
 import UserForm from "./components/UserForm";
@@ -17,7 +19,7 @@ function App() {
     <Thanks />
   ];
 
-  const {currentStep, currentComponent } = useForm(formComponents);
+  const { currentStep, currentComponent, changeStep, isFirstStep, isLastStep } = useForm(formComponents);
 
   return (
     <div className="app">
@@ -29,7 +31,7 @@ function App() {
 
       <div className="form-container">
         <p>etapas</p>
-        <form>
+        <form onSubmit={(e) => changeStep(currentStep + 1, e)}>
 
           <div className="inputs-container">
             {currentComponent}
@@ -37,15 +39,23 @@ function App() {
 
 
           <div className="actions">
-            <button type='button'>
-              <GrFormPrevious />
-              <span>voltar</span>
-            </button>
-
-            <button type='submit'>
-              <span>avançar</span>
-              <GrFormNext />
-            </button>
+            {!isFirstStep &&
+              (<button type='button' onClick={() => changeStep(currentStep - 1)}>
+                <GrFormPrevious />
+                <span>voltar</span>
+              </button>)
+            }
+            {!isLastStep ? (
+              <button type='submit'>
+                <span>avançar</span>
+                <GrFormNext />
+              </button>
+            ) : (
+              <button type='button'>
+                <span>enviar</span>
+                <FiSend />
+              </button>
+            )}
           </div>
 
         </form>
